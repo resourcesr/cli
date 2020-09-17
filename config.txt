@@ -1,0 +1,2 @@
+#URL to be parsed.
+url = https://www.riphah.edu.pk/faculty/ict-computing
