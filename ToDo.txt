@@ -1,0 +1,13 @@
+1. Course materials
+2. Course timetable and notification before five minute on app.
+3. Forum to ask questions
+4. Quizzes
+5. Assignment solution after date
+6. Import notice notification on mobile app and number if provided.
+7. User login
+8. Multiple classes
+9. Multiple semesters
+
+a. Admin / Management
+c. Teacher
+d. Student

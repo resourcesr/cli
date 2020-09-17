@@ -2,8 +2,9 @@
 __author__ = "Muhammad Umer Farooq"
 __license__ = "GPL-3"
 __version__ = "1.0.0"
-__maintainer__ = "Muhammad Umer Farooq"
-__email__ = "contact@muhammadumerfarooq.me"
+__administrator__ = "Muhammad Umer Farooq"
+__developers__ = ("Muhammad Usman Naeem", "Muhammad Umer Farooq")
+__email__ = ("usman.naeem2212@gmail.com", "contact@muhammadumerfarooq.me")
 __status__ = "Production"
 
 import os
