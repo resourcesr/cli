@@ -1,2 +1,10 @@
 #URL to be parsed.
-url = https://www.riphah.edu.pk/faculty/ict-computing
+computing_url = https://www.riphah.edu.pk/faculty/ict-computing
+physics_url = https://www.riphah.edu.pk/faculty/ict-physics
+
+#Extensions
+#programs = /programs
+#fee = /fee-structure
+#faculty = /faculty-members
+#contact = /contact
+#prospectus = /downloads

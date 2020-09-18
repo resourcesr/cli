@@ -1,0 +1,23 @@
+{
+  "database": {
+    "db_name": "riphah",
+    "tables" : {
+      "1" : {
+          "name": "computing",
+          "fields": {
+            "programs": "varchar",
+            "faculty": "varchar",
+            "contact": "varchar"
+          }
+      },
+        "2" : {
+            "name": "physics",
+            "fields": {
+              "programs": "varchar",
+              "faculty": "varchar",
+              "contact": "varchar"
+            }
+        }
+    }
+  }
+}
