@@ -73,8 +73,11 @@ if choice == "fc" :
 
     print("\nFaculty Members :")
     html = get("https://www.riphah.edu.pk/faculty/ict-computing/faculty-members")
-    print(html.find('div',{'class':'views-field views-field-field-full-name'}).text) #gets field-content    -    This line just gets first one, Umer please solve this issue
-
+    # print(html.find('div',{'class':'views-field views-field-field-full-name'}).text) #gets field-content    -    This line just gets first one, Umer please solve this issue
+    members = html.find_all('div',{'class':'views-field views-field-field-full-name'})
+    # Printing names.
+    for name in members:
+        print(name.text)
     '''
                 Above Taken from Following Example :
         source_code = <span class="UserName"><a href="#">Martin Elias</a></span>
@@ -96,7 +99,6 @@ elif choice == "p" :
     print("\nFaculty Members :")
     html = get("https://www.riphah.edu.pk/faculty/ict-computing/faculty-members")
     print(html.find('div',{'class':'views-field views-field-field-full-name'}).text) #gets field-content    -    This line just gets first one, Umer please solve this issue
-
 
 #choice = menu("second")
 #if choice == "p" :
