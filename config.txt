@@ -1,3 +1,14 @@
 #URL to be parsed.
 computing_url = https://www.riphah.edu.pk/faculty/ict-computing
 physics_url = https://www.riphah.edu.pk/faculty/ict-physics
+media_sciences_url = https://www.riphah.edu.pk/faculty/ict-media-sciences
+management_sciences_url = https://www.riphah.edu.pk/faculty/ict-management-sciences
+biomedical_engineering_url = https://www.riphah.edu.pk/faculty/ict-biomedical-engineering
+electrical_engineering_url = https://www.riphah.edu.pk/faculty/ict-electrical-engineering
+pharmaceutical_sciences_url = https://www.riphah.edu.pk/faculty/ict-pharmaceutical-sciences
+dental_sciences_url = https://www.riphah.edu.pk/faculty/ict-dental-sciences
+medical_sciences_url = https://www.riphah.edu.pk/faculty/ict-medical-sciences
+mathematics_statistics_url = https://www.riphah.edu.pk/faculty/ict-mathematics-statistics
+public_policy_url = https://www.riphah.edu.pk/faculty/ict-public-policy
+social_science_url = https://www.riphah.edu.pk/faculty/ict-social-science
+game_design_production_url = https://www.riphah.edu.pk/faculty/ict-game-design-production

@@ -70,7 +70,10 @@ class Parser:
                                 continue
                             lin += " " + l.upper()
                     links.append(lin)
-        return(links)
+        if len(links) != 0 :
+            return links
+        else :
+            return "none"
 
     @staticmethod
     def get_faculty(html) :
@@ -84,7 +87,10 @@ class Parser:
             None.
         '''
         members = html.find_all('div',{'class':'views-field views-field-field-full-name'})
-        return members
+        if len(members) != 0 :
+            return members
+        else :
+            return "none"
 
     @staticmethod
     def get_contact(html) :
@@ -109,7 +115,24 @@ class Parser:
             z = re.findall("^<p><strong>.+", str(tag))
             for v in z :
                 if v != None : data.append(v[11:(len(v)-13)])
-        return data
+        if len(data) != 0 :
+            return data
+        else :
+            return "none"
+
+    @staticmethod
+    def get_input() :
+        '''
+        Gets Inout from user and returns Answer
+        Args:
+            None
+        Returns:
+            output: Output
+        Raises:
+            None.
+        '''
+        output = input(" => ")
+        return output
 
     @staticmethod
     def menu(para) :
@@ -124,27 +147,8 @@ class Parser:
         '''
         if para == "main" :
             print("------------------------------\nChoose a Department from Below :\n------------------------------")
-            choice = input("\n- FC\tFaculty of Computing\n- P\tPhysics\n- E \tExit.\n  => ")
-            if choice.lower() == "fc" :
-                return choice.lower()
-            elif choice.lower() == "p" :
-                return choice.lower()
-            elif choice.lower() == "e" :
-                print("\nGoodBye.")
-                quit()
-            else :
-                return "error"
+            print("\n- 1\tFaculty of Computing\n- 2\tPhysics\n- 3\tMedia Sciences\n- 4\tManagement Sciences\n- 5\tBiomedical Engineering\n- 6\tElectrical Engineering\n- 7\tPharmaceutical Sciences\n- 8\tDental Sciences\n- 9\tMedical Sciences\n- 10\tMathematics Statistics\n- 11\tPublic Policy\n- 12\tSocial Science\n- 13\tGame Design Production\n- E \tExit.")
 
         elif para == "second" :
             print("-----------------------------\nChoose an Option from Below :\n-----------------------------")
-            choice = input("\n- P\tPrograms\n- F\tFaculty Members\n- C\tContact\n- E \tExit.\n  => ")
-            if choice.lower() == "p" :
-                return choice.lower()
-            elif choice.lower() == "f" :
-                return choice.lower()
-            elif choice.lower() == "c" :
-                return choice.lower()
-            elif choice.lower() == "e" :
-                quit()
-            else :
-                return "error"
+            print("\n- P\tPrograms\n- F\tFaculty Members\n- C\tContact\n- E \tExit.")

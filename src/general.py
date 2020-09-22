@@ -25,23 +25,36 @@ def get_and_display_data(program) :
     '''
     u = program + "_url"
     url = get_config(u) + "/programs"
-    html = conn.get_html(url)
-
+    try : html = conn.get_html(url)
+    except : print("No Data On Website")
     print("\nOffered Programs :")
     p = conn.get_program(html)
-    for programs in p :
-        print(programs)
+    if p == "none" :
+        print("No Programs")
+    else :
+        for programs in p :
+            print(programs)
 
     print("\nFaculty Members :")
-    url = "https://www.riphah.edu.pk/faculty/ict-" + program + "/faculty-members"
-    html = conn.get_html(url)
+    u = program + "_url"
+    url = get_config(u) + "/faculty-members"
+    try : html = conn.get_html(url)
+    except : print("No Data On Website")
     members = conn.get_faculty(html)
-    for name in members:
-        print(name.text)
+    if members == "none" :
+        print("No Members.")
+    else :
+        for name in members:
+            print(name.text)
 
     print("\nContact :")
-    url = "https://www.riphah.edu.pk/faculty/ict-" + program + "/contact"
-    html = conn.get_html(url)
+    u = program + "_url"
+    url = get_config(u) + "/contact"
+    try : html = conn.get_html(url)
+    except : print("No Data On Website")
     contacts = conn.get_contact(html)
-    for contact in contacts :
-        print(contact)
+    if contacts == "none" :
+        print("No Contacts.")
+    else :
+        for contact in contacts :
+            print(contact)
