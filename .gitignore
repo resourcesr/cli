@@ -135,4 +135,4 @@ dmypy.json
 *.csv
 test
 
-sample.emb
+*.emb
