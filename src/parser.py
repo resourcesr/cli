@@ -10,6 +10,8 @@ __status__ = "Production"
 from urllib.request import Request, urlopen
 import re
 from bs4 import BeautifulSoup
+import firebase_admin
+from firebase_admin import credentials, firestore
 
 class Parser:
 
@@ -137,11 +139,11 @@ class Parser:
     @staticmethod
     def menu(para) :
         '''
-        Gets level of menu and Dispays Menu In accordance, returns user's selection
+        Gets level of menu and Dispays Menu In accordance
         Args:
             para: Level of Menu
         Returns:
-            Choice of User in menu / error (if any)
+            None
         Raises:
             None.
         '''
@@ -152,3 +154,55 @@ class Parser:
         elif para == "second" :
             print("-----------------------------\nChoose an Option from Below :\n-----------------------------")
             print("\n- P\tPrograms\n- F\tFaculty Members\n- C\tContact\n- E \tExit.")
+
+    @staticmethod
+    def initialize_firebase() :
+        '''
+        Initializes firebase sdk and firestore instance
+        Args:
+            None
+        Returns:
+            None
+        Raises:
+            None.
+        '''
+        cred = credentials.Certificate("apps.json")
+        firebase_admin.initialize_app(cred)
+
+    @staticmethod
+    def write_on_firebase(department, attribute, data) :
+        '''
+        Writes data on firebase
+        Args:
+            program: (Name of Collection) program that user wants to see data of
+            attribute: (Name of Document) Programs / Faculty-Members / Contact
+            data: Dictionary of data to insert in firebase
+        Returns:
+            None
+        Raises:
+            None.
+        '''
+        firestore_db = firestore.client()
+        firestore_db.collection(department).document(attribute).set(data)
+
+
+    @staticmethod
+    def read_from_firebase(program, attribute) :
+        '''
+        Reads data from firebase
+        Args:
+            program: (Name of Collection) program that user wants to see data of
+            attribute: (Name of Document) Programs / Faculty-Members / Contact
+        Returns:
+            List of data file from firebase
+        Raises:
+            None.
+        '''
+        dat = list()
+        firestore_db = firestore.client()
+        data = firestore_db.collection(program).document(attribute).get().to_dict()
+        if data == None :
+            return dat
+        for i in sorted (data) :
+            dat.append(str(data[i]))
+        return dat

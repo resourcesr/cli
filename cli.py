@@ -2,8 +2,7 @@ from src.parser import Parser
 from src.general import get_and_display_data
 import ssl
 
-p = Parser()
-conn = p.conn()
+conn = Parser()
 
 ctx = ssl.create_default_context()
 ctx.check_hostname = False
