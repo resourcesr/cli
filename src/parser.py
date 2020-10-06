@@ -11,6 +11,7 @@ from urllib.request import Request, urlopen
 import re
 from bs4 import BeautifulSoup
 import firebase_admin
+import os
 from firebase_admin import credentials, firestore
 
 class Parser:
@@ -78,21 +79,77 @@ class Parser:
             return "none"
 
     @staticmethod
-    def get_faculty(html) :
+    def get_faculty(html, para) :
         '''
         Gets name of faculty in a program offered in a course's page html
         Args:
             html: html of the webpage of that course
+            para: Parameter
         Returns:
             List of Faculty Members
         Raises:
             None.
         '''
-        members = html.find_all('div',{'class':'views-field views-field-field-full-name'})
-        if len(members) != 0 :
-            return members
-        else :
-            return "none"
+        if para == "username" :
+            usernames = {}
+            tags = html('a')
+            i = 0
+            for tag in tags:
+                username = tag.get('href')
+                if username != None :
+                    if username.startswith("https://www.riphah.edu.pk/users") :
+                        i += 1
+                        usernames.update( {str(i) : str(username[31:])} )
+            return usernames
+        if para == "name" :
+            usernames = {}
+            Name = html.findAll("div", {"class" : "views-field views-field-field-full-name"})
+            i = 0
+            for n in Name:
+                i += 1
+                tags = n('div')
+                for tag in tags:
+                    result = re.split(">", str(tag))
+                    name = str(result[2])[:(len(str(result[2])))-3]
+                    usernames.update( {str(i) : name} )
+            return usernames
+
+    def faculty_details(self, username, url):
+        '''
+        Returns Details of Faculty members from website
+        Args:
+            username = usernames of faculty-members
+            url = base url of website
+        Returns:
+            Dictionary
+        Raises:
+            None.
+        '''
+        url += username
+        html = self.get_html(url)
+        tags = html('img')
+        for tag in tags:
+            link = tag.get('src')
+            if link != None :
+                if link.startswith("https://www.riphah.edu.pk/sites/default/files/styles/photo_gallery_front_210x210_/public/pictures") :
+                    image = str(link)
+        name_temp = str(html.find("div", {"class":"personal_info_full_name"}))
+        name = name_temp[37:(len(name_temp)-6)]
+        designation_temp = str(html.find("div", {"class":"personal_info_desig_title"}))
+        designation = designation_temp[39:(len(designation_temp)-6)]
+        level_temp = str(html.find("div", {"class":"personal_info_level_edu"}))
+        level = level_temp[37:(len(level_temp)-6)]
+        #email_temp = str(html.find("div", {"class" : "personal_info_email"}))
+        #email = email_temp[42:(len(email_temp)-26)]
+        email = "toBeAddedYet@haha.com"
+        data = "{\n'name': '" + str(name) + "',\n'designation': '" + str(designation) + "',\n'level': '" + str(level) + "',\n'email': '" + str(email) + "'\n}"
+        print(data)
+        return data
+
+    @staticmethod
+    def decode(string):
+        # Todo
+        return string
 
     @staticmethod
     def get_contact(html) :
@@ -206,3 +263,37 @@ class Parser:
         for i in sorted (data) :
             dat.append(str(data[i]))
         return dat
+
+    @staticmethod
+    def create_folder(name, path) :
+        '''
+        Creates a folder in given path of given name
+        Args:
+            name: name of folder
+            path: path where folder is to be created
+        Returns:
+            None
+        Raises:
+            None.
+        '''
+        path = os.path.join(path, name)
+        try : os.mkdir(path)
+        except : return
+
+    @staticmethod
+    def file_exists(file) :
+        '''
+        Checks if file exists
+        Args:
+            file: location / filename
+        Returns:
+            Bool: True/False
+        Raises:
+            None.
+        '''
+        try :
+            my_file = open(file)
+            my_file.close()
+            return True
+        except :
+            return False
