@@ -125,6 +125,7 @@ class Parser:
         Raises:
             None.
         '''
+        data = {}
         url += username
         html = self.get_html(url)
         tags = html('img')
@@ -135,16 +136,17 @@ class Parser:
                     image = str(link)
         name_temp = str(html.find("div", {"class":"personal_info_full_name"}))
         name = name_temp[37:(len(name_temp)-6)]
+        data.update( {"name" : str(name)} )
         designation_temp = str(html.find("div", {"class":"personal_info_desig_title"}))
         designation = designation_temp[39:(len(designation_temp)-6)]
+        data.update( {"designation" : str(designation)} )
         level_temp = str(html.find("div", {"class":"personal_info_level_edu"}))
         level = level_temp[37:(len(level_temp)-6)]
+        data.update( {"level" : str(level)} )
         #email_temp = str(html.find("div", {"class" : "personal_info_email"}))
-        #email = email_temp[42:(len(email_temp)-26)]
-        email = "toBeAddedYet@haha.com"
-        data = "{\n'name': '" + str(name) + "',\n'designation': '" + str(designation) + "',\n'level': '" + str(level) + "',\n'email': '" + str(email) + "'\n}"
-        print(data)
-        return data
+        email = ""  #email_temp[42:(len(email_temp)-26)]
+        data.update( {"email" : str(email)} )
+        return (json.dumps(data, indent=2))
 
     @staticmethod
     def decode(string):

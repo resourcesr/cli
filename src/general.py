@@ -122,7 +122,7 @@ def get_and_display_data(program) :
         p = os.path.join(path, program, faculty)
         File = p + "\\" + faculty + ".json"
         with(open(File, "w")) as file:
-            json.dump(data, file)
+            file.write(data)
             print(faculty, ": Written on File")
 
 
