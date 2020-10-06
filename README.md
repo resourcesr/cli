@@ -3,11 +3,14 @@ Python cli tool to parse and get data from Riphah website
 
 ## Features
 1. [x] Gets data from website
+2. Data Includes
+      [X] Programs
+      [X] Faculty
+      [X] contact
 2. [x] Parses it to Get information
-3. [x] Stores it in database
+3. [x] Stores it in firebase
 4. [x] Displays it to user as user wants
-5. [x] Adding all programs' data in database
-6. [ ] Ability to get data of multiple institutes
+5. [ ] Ability to get data of multiple institutes
 
 ## Contribution
 You're welcome to contribute to this project.
