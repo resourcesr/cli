@@ -13,7 +13,8 @@ from src._config import get_config
 p = Parser()
 conn = p.conn()
 
-def get_and_display_data(program) :
+
+def get_and_display_data(program):
     '''
     Gets data from respective website of the program user wishes to see data of and Displays it
     Args:

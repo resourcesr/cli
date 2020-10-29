@@ -11,6 +11,7 @@ from urllib.request import Request, urlopen
 import re
 from bs4 import BeautifulSoup
 
+
 class Parser:
 
     @staticmethod
@@ -76,7 +77,7 @@ class Parser:
             return "none"
 
     @staticmethod
-    def get_faculty(html) :
+    def get_faculty(html):
         '''
         Gets name of faculty in a program offered in a course's page html
         Args:
@@ -87,7 +88,8 @@ class Parser:
             None.
         '''
         members = html.find_all('div',{'class':'views-field views-field-field-full-name'})
-        if len(members) != 0 :
+        
+        if len(members) != 0:
             return members
         else :
             return "none"
