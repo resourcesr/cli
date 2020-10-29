@@ -80,11 +80,8 @@ class Parser:
             return "none"
 
     @staticmethod
-<<<<<<< HEAD
-    def get_faculty(html):
-=======
+
     def get_faculty(html, para) :
->>>>>>> d9111015a5ef0431024878c5b6888a0ccd687a93
         '''
         Gets name of faculty in a program offered in a course's page html
         Args:
@@ -95,14 +92,6 @@ class Parser:
         Raises:
             None.
         '''
-<<<<<<< HEAD
-        members = html.find_all('div',{'class':'views-field views-field-field-full-name'})
-        
-        if len(members) != 0:
-            return members
-        else :
-            return "none"
-=======
         if para == "username" :
             usernames = {}
             tags = html('a')
