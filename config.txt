@@ -1,4 +1,5 @@
 #URL to be parsed.
+riphah = https://www.riphah.edu.pk
 computing_url = https://www.riphah.edu.pk/faculty/ict-computing
 physics_url = https://www.riphah.edu.pk/faculty/ict-physics
 media_sciences_url = https://www.riphah.edu.pk/faculty/ict-media-sciences

@@ -10,6 +10,9 @@ __status__ = "Production"
 from urllib.request import Request, urlopen
 import re
 from bs4 import BeautifulSoup
+import firebase_admin
+import os
+from firebase_admin import credentials, firestore
 
 
 class Parser:
@@ -77,22 +80,92 @@ class Parser:
             return "none"
 
     @staticmethod
+<<<<<<< HEAD
     def get_faculty(html):
+=======
+    def get_faculty(html, para) :
+>>>>>>> d9111015a5ef0431024878c5b6888a0ccd687a93
         '''
         Gets name of faculty in a program offered in a course's page html
         Args:
             html: html of the webpage of that course
+            para: Parameter
         Returns:
             List of Faculty Members
         Raises:
             None.
         '''
+<<<<<<< HEAD
         members = html.find_all('div',{'class':'views-field views-field-field-full-name'})
         
         if len(members) != 0:
             return members
         else :
             return "none"
+=======
+        if para == "username" :
+            usernames = {}
+            tags = html('a')
+            i = 0
+            for tag in tags:
+                username = tag.get('href')
+                if username != None :
+                    if username.startswith("https://www.riphah.edu.pk/users") :
+                        i += 1
+                        usernames.update( {str(i) : str(username[31:])} )
+            return usernames
+        if para == "name" :
+            usernames = {}
+            Name = html.findAll("div", {"class" : "views-field views-field-field-full-name"})
+            i = 0
+            for n in Name:
+                i += 1
+                tags = n('div')
+                for tag in tags:
+                    result = re.split(">", str(tag))
+                    name = str(result[2])[:(len(str(result[2])))-3]
+                    usernames.update( {str(i) : name} )
+            return usernames
+
+    def faculty_details(self, username, url):
+        '''
+        Returns Details of Faculty members from website
+        Args:
+            username = usernames of faculty-members
+            url = base url of website
+        Returns:
+            Dictionary
+        Raises:
+            None.
+        '''
+        data = {}
+        url += username
+        html = self.get_html(url)
+        tags = html('img')
+        for tag in tags:
+            link = tag.get('src')
+            if link != None :
+                if link.startswith("https://www.riphah.edu.pk/sites/default/files/styles/photo_gallery_front_210x210_/public/pictures") :
+                    image = str(link)
+        name_temp = str(html.find("div", {"class":"personal_info_full_name"}))
+        name = name_temp[37:(len(name_temp)-6)]
+        data.update( {"name" : str(name)} )
+        designation_temp = str(html.find("div", {"class":"personal_info_desig_title"}))
+        designation = designation_temp[39:(len(designation_temp)-6)]
+        data.update( {"designation" : str(designation)} )
+        level_temp = str(html.find("div", {"class":"personal_info_level_edu"}))
+        level = level_temp[37:(len(level_temp)-6)]
+        data.update( {"level" : str(level)} )
+        #email_temp = str(html.find("div", {"class" : "personal_info_email"}))
+        email = ""  #email_temp[42:(len(email_temp)-26)]
+        data.update( {"email" : str(email)} )
+        return (json.dumps(data, indent=2))
+
+    @staticmethod
+    def decode(string):
+        # Todo
+        return string
+>>>>>>> d9111015a5ef0431024878c5b6888a0ccd687a93
 
     @staticmethod
     def get_contact(html) :
@@ -139,11 +212,11 @@ class Parser:
     @staticmethod
     def menu(para) :
         '''
-        Gets level of menu and Dispays Menu In accordance, returns user's selection
+        Gets level of menu and Dispays Menu In accordance
         Args:
             para: Level of Menu
         Returns:
-            Choice of User in menu / error (if any)
+            None
         Raises:
             None.
         '''
@@ -154,3 +227,89 @@ class Parser:
         elif para == "second" :
             print("-----------------------------\nChoose an Option from Below :\n-----------------------------")
             print("\n- P\tPrograms\n- F\tFaculty Members\n- C\tContact\n- E \tExit.")
+
+    @staticmethod
+    def initialize_firebase() :
+        '''
+        Initializes firebase sdk and firestore instance
+        Args:
+            None
+        Returns:
+            None
+        Raises:
+            None.
+        '''
+        cred = credentials.Certificate("apps.json")
+        firebase_admin.initialize_app(cred)
+
+    @staticmethod
+    def write_on_firebase(department, attribute, data) :
+        '''
+        Writes data on firebase
+        Args:
+            program: (Name of Collection) program that user wants to see data of
+            attribute: (Name of Document) Programs / Faculty-Members / Contact
+            data: Dictionary of data to insert in firebase
+        Returns:
+            None
+        Raises:
+            None.
+        '''
+        firestore_db = firestore.client()
+        firestore_db.collection(department).document(attribute).set(data)
+
+
+    @staticmethod
+    def read_from_firebase(program, attribute) :
+        '''
+        Reads data from firebase
+        Args:
+            program: (Name of Collection) program that user wants to see data of
+            attribute: (Name of Document) Programs / Faculty-Members / Contact
+        Returns:
+            List of data file from firebase
+        Raises:
+            None.
+        '''
+        dat = list()
+        firestore_db = firestore.client()
+        data = firestore_db.collection(program).document(attribute).get().to_dict()
+        if data == None :
+            return dat
+        for i in sorted (data) :
+            dat.append(str(data[i]))
+        return dat
+
+    @staticmethod
+    def create_folder(name, path) :
+        '''
+        Creates a folder in given path of given name
+        Args:
+            name: name of folder
+            path: path where folder is to be created
+        Returns:
+            None
+        Raises:
+            None.
+        '''
+        path = os.path.join(path, name)
+        try : os.mkdir(path)
+        except : return
+
+    @staticmethod
+    def file_exists(file) :
+        '''
+        Checks if file exists
+        Args:
+            file: location / filename
+        Returns:
+            Bool: True/False
+        Raises:
+            None.
+        '''
+        try :
+            my_file = open(file)
+            my_file.close()
+            return True
+        except :
+            return False

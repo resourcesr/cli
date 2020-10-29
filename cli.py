@@ -2,8 +2,7 @@ from src.parser import Parser
 from src.general import get_and_display_data
 import ssl
 
-p = Parser()
-conn = p.conn()
+conn = Parser()
 
 ctx = ssl.create_default_context()
 ctx.check_hostname = False
@@ -15,7 +14,9 @@ if ch.lower() == "e" :
     print("\nGoodBye !")
     quit()
 try : choice = int(ch)
-except : print("Enter Just Numbers !")
+except :
+    print("Enter Just Numbers !")
+    quit()
 if choice == 1 :
     get_and_display_data("computing")
 elif choice == 2 :

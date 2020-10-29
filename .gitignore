@@ -134,4 +134,9 @@ dmypy.json
 
 *.csv
 test
+<<<<<<< HEAD
 *.emb
+=======
+apps.json
+*.emb
+>>>>>>> d9111015a5ef0431024878c5b6888a0ccd687a93
